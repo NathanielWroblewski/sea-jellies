@@ -27,23 +27,31 @@ let time
 const MOTION = 0.1 // Radians
 
 const PARTS = 8
-const ANGLES = 20
+const ANGLES = 31
 
 const X1o = scale * WIDTH
 const Y1o = scale * WIDTH
 const X2o = 0.3 * WIDTH
+const X2i = 0.5 * scale * WIDTH
 const Y2o = 0.5 * scale * WIDTH
 
-const x1 = t => X1o * noise(75 + MOTION * Math.cos(τ * (t + time)), MOTION * Math.sin(τ * (t + time)))
-const y1 = t => Y1o * noise(100 + MOTION * Math.cos(τ * (t + time)), MOTION * Math.sin(τ * (t + time)))
-const x2 = t => X2o + 0.5 * scale * WIDTH * noise(200 + MOTION * Math.cos(τ * (t + time)), MOTION * Math.sin(τ * (t + time)))
-const y2 = t => Y2o * noise(300 + MOTION * Math.cos(τ * (t + time)), MOTION * Math.sin(τ * (t + time)))
+const coords = (t, t2) => {
+  const cos1 = MOTION * Math.cos(τ * (t + time))
+  const sin1 = MOTION * Math.sin(τ * (t + time))
+  const cos2 = !t2 ? cos1 : MOTION * Math.cos(τ * (t2 + time))
+  const sin2 = !t2 ? sin1 : MOTION * Math.sin(τ * (t2 + time))
+
+  const x1 = X1o * noise(75 + cos1, sin1)
+  const y1 = Y1o * noise(100 + cos1, sin1)
+  const x2 = X2o + X2i * noise(200 + cos2, sin2)
+  const y2 = Y2o * noise(300 + cos2, sin2)
+
+  return [Vector.from([x1, y1]), Vector.from([x2, y2])]
+}
 
 const draw = (j, time) => {
   const φ = -PARTS * j / ANGLES
-
-  const outside = Vector.from([x1(φ), y1(φ)])
-  const inside = Vector.from([x2(φ), y2(φ)])
+  const [outside, inside] = coords(φ)
 
   renderCircle(context, inside, 1, BLACK, BLACK)
   renderCircle(context, outside, 1, BLACK, BLACK)
@@ -52,9 +60,7 @@ const draw = (j, time) => {
     const t = i/LERP_COUNT
     const outsideDelay = -DELAY_FACTOR * t + φ
     const insideDelay = -DELAY_FACTOR * (1 - t) + φ
-
-    const delayedOutside = Vector.from([x1(outsideDelay), y1(outsideDelay)])
-    const delayedInside = Vector.from([x2(insideDelay), y2(insideDelay)])
+    const [delayedOutside, delayedInside] = coords(outsideDelay, insideDelay)
 
     const point = Vector.from([
       lerp(delayedOutside.x, delayedInside.x, t),

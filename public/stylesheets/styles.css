@@ -21,7 +21,7 @@ html, body {
   margin:  0;
   background-color: #EEEEEE;
   color: #666666;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Libre Baskerville", serif;
 }
 
 .container {
@@ -45,4 +45,19 @@ html, body {
 .canvas {
   animation-name: fadein;
   animation-duration: 4s;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+a, a:visited {
+  color: #666666;
+}
+
+a:hover {
+  color: #444444;
 }
