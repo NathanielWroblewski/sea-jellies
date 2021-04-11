@@ -28,7 +28,7 @@ let time
 const MOTION = 0.1 // Radians
 
 const PARTS = 8
-const ANGLES = 31
+const ANGLES = 24
 
 const X1o = scale * WIDTH
 const Y1o = scale * WIDTH
