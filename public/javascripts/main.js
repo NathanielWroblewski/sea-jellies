@@ -8,6 +8,7 @@ import { τ, FRAMES, LERP_COUNT, DELAY_FACTOR } from './constants/dimensions.js'
 
 seed(Math.random())
 
+const blobs = document.querySelectorAll('.blob')
 const canvas = document.querySelector('.canvas')
 const context = canvas.getContext('2d')
 
@@ -75,6 +76,16 @@ const SAMPLES_PER_FRAME = 1
 const SHUTTER_ANGLE = 0.6
 
 const step = () => {
+  let f = (frame % 360) * 4
+
+  blobs.forEach((blob, index) => (
+    blob.setAttribute(
+      'transform',
+      `rotate(${index * 90 + f}) translate(8,0.1) rotate(${-index * 90 - f})`
+    )
+  ))
+
+
   context.clearRect(0, 0, WIDTH, HEIGHT)
 
   let sa = 0
@@ -99,8 +110,5 @@ const step = () => {
 
   window.requestAnimationFrame(step)
 }
-
-window.clear = () => context.clearRect(0, 0, WIDTH, HEIGHT)
-window.step = step
 
 window.requestAnimationFrame(step)
