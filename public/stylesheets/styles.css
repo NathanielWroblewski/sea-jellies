@@ -30,21 +30,32 @@ html, body {
   padding: 5rem 1rem;
 }
 
+.title-container {
+  height: 150px;
+  position: relative;
+}
+
 .title {
   font-weight: 700;
   margin-top: 0;
   margin-bottom: -50px;
   font-family: 'Montserrat', sans-serif;
   font-size: 3.2rem;
-  line-height: 1;
+  line-height: 150px;
   animation-name: fadein;
   animation-duration: 2s;
   text-align: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .canvas {
   animation-name: fadein;
   animation-duration: 4s;
+  margin-top: -50px;
 }
 
 p {
@@ -60,4 +71,20 @@ a, a:visited {
 
 a:hover {
   color: #444444;
+}
+
+.blobs-animation {
+  width: 200px;
+  height: 150px;
+  display: block;
+  margin: 0 auto;
+}
+
+.blobs {
+ -webkit-filter: url("#goo");
+ filter: url("#goo");
+}
+
+.blob {
+  fill: white;
 }
